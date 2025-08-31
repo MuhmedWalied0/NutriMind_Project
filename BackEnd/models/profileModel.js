@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
+const profileSchema = new mongoose.Schema({
   user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   first_name: { type: String, required: true, trim: true },
   last_name: { type: String, required: true, trim: true },
@@ -14,6 +14,6 @@ const userSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-const User = mongoose.model('User', userSchema);
+const Profile = mongoose.model('Profile', profileSchema);
 
-export default User;
+export default Profile;
