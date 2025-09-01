@@ -1,181 +1,121 @@
+---
+
 # NutriMind Project
 
 [![Work in Progress](https://img.shields.io/badge/Status-Work%20in%20Progress-yellow)](https://github.com/MuhmedWalied0/NutriMind_Project)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-green)](https://nodejs.org/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Latest-brightgreen)](https://www.mongodb.com/)
 
-A backend API for user authentication and profile management built with Node.js, Express, MongoDB, and Zod validation.
+A backend API for user authentication, profile, and weekly routine management built with Node.js, Express, MongoDB, and Zod validation.
 
-> **⚠️ Note:** This project is currently under development. Some features are incomplete or may change.
+> **⚠️ Note:** This project is under active development. Some features may change.
 
 ---
 
 ## 📋 Table of Contents
-- [Features](#-features)
-- [Prerequisites](#-prerequisites)
-- [Installation](#-installation)
-- [Environment Variables](#-environment-variables)
-- [Running the Project](#-running-the-project)
-- [API Endpoints](#-api-endpoints)
-- [Validation](#-validation)
-- [Error Handling](#-error-handling)
+
+* [Features](#-features)
+* [Prerequisites](#-prerequisites)
+* [Installation](#-installation)
+* [Environment Variables](#-environment-variables)
+* [Running the Project](#-running-the-project)
+* [API Endpoints](#-api-endpoints)
+* [Validation](#-validation)
+* [Error Handling](#-error-handling)
+* [Implemented Improvements](#-implemented-improvements)
+
 ---
 
 ## ✨ Features
 
-- **User Authentication**: Sign Up, Sign In, Logout functionality
-- **Profile Management**: Create, retrieve, and update user profiles
-- **Input Validation**: Robust validation using Zod schemas
-- **JWT Authentication**: Secure token-based authentication
-- **Cookie Support**: Secure token storage in HTTP-only cookies
-- **Error Handling**: Consistent error response format
-- **MongoDB Integration**: NoSQL database for data persistence
+* **User Authentication**: Sign Up, Sign In, Logout
+* **Profile Management**: Create, retrieve, and update user profiles
+* **Weekly Routine Management**: Create, get current, and list weekly routines
+* **Input Validation**: Robust validation using Zod schemas
+* **JWT Authentication**: Secure token-based authentication
+* **Cookie Support**: HTTP-only cookies for token storage
+* **Error Handling**: Consistent error response format using AppError and global middleware
+* **MongoDB Integration**: NoSQL database for data persistence
 
 ---
 
 ## 🔧 Prerequisites
 
-Before running this project, make sure you have the following installed:
-
-- [Node.js](https://nodejs.org/) (version 16 or higher)
-- [MongoDB](https://www.mongodb.com/) (local installation or MongoDB Atlas)
+* [Node.js](https://nodejs.org/) (version 16+)
+* [MongoDB](https://www.mongodb.com/) (local installation or Atlas)
 
 ---
 
 ## 📦 Installation
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/MuhmedWalied0/NutriMind_Project.git
-   cd BackEnd
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+```bash
+git clone https://github.com/MuhmedWalied0/NutriMind_Project.git
+cd BackEnd
+npm install
+```
 
 ---
 
 ## 🔐 Environment Variables
 
-Create a `.env` file in the root directory with the following variables:
-
 ```env
-# Server Configuration
 PORT=5000
-
-# Database Configuration
 MONGO_URI=mongodb://localhost:27017/nutrimind
-
-# Security
 JWT_SECRET=your_super_secure_jwt_secret_here
-
+JWT_EXPIRES_IN=7d
 ```
 
 ---
 
 ## 🚀 Running the Project
 
-### Development Mode
+**Development:**
+
 ```bash
 npm run dev
 ```
 
-### Production Mode
+**Production:**
+
 ```bash
 npm start
 ```
 
-The server will be available at `http://localhost:5000`
+Server runs at `http://localhost:5000`
 
 ---
 
 ## 📡 API Endpoints
 
-### 🔒 Authentication Endpoints
+### 🔒 Authentication
 
-#### Sign Up
-- **Endpoint:** `POST /api/auth/signup`
-- **Description:** Create a new user account
-- **Request Body:**
-  ```json
-  {
-    "username": "john_doe",
-    "email": "john@example.com",
-    "password": "password123"
-  }
-  ```
-- **Success Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Account created successfully",
-    "data": {
-      "id": "<user_id>",
-      "username": "john_doe",
-      "email": "john@example.com"
-    }
-  }
-  ```
+* **Sign Up**: `POST /api/auth/signup`
+* **Sign In**: `POST /api/auth/signin`
+* **Logout**: `POST /api/auth/logout`
 
-#### Sign In
-- **Endpoint:** `POST /api/auth/signin`
-- **Description:** Authenticate user and receive JWT token
-- **Request Body:**
-  ```json
-  {
-    "email": "john@example.com",
-    "password": "password123"
-  }
-  ```
-- **Success Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Login successful",
-    "token": "<jwt_token>"
-  }
-  ```
+### 👤 Profile
 
-#### Logout
-- **Endpoint:** `POST /api/auth/logout`
-- **Description:** Invalidate user session
-- **Authentication:** Required
-- **Success Response:**
-  ```json
-  {
-    "success": true,
-    "message": "Logged out successfully"
-  }
-  ```
+* **Create Profile**: `POST /api/profile`
+* **Get Profile**: `GET /api/profile`
+* **Update Profile**: `PUT /api/profile`
 
-### 👤 Profile Endpoints
+### 📅 Weekly Routine
 
-> **Note:** All profile endpoints require authentication via JWT token in cookies.
+* **Get Routines**: `GET /api/routines`
+* **Get Current Routine**: `GET /api/routines/current`
+* **Create Routine**: `POST /api/routines`
 
-#### Create Profile
-- **Endpoint:** `POST /api/profile`
-- **Description:** Create a new user profile
-- **Authentication:** Required
-
-#### Get Profile
-- **Endpoint:** `GET /api/profile`
-- **Description:** Retrieve current user's profile
-- **Authentication:** Required
-
-#### Update Profile
-- **Endpoint:** `PUT /api/profile`
-- **Description:** Update current user's profile
-- **Authentication:** Required
+> All protected endpoints require JWT authentication via HTTP-only cookies.
 
 ---
 
 ## ✅ Validation
 
-All API requests are validated using **Zod** schemas. Invalid requests return structured error messages:
+* **Zod** schemas validate inputs.
+* Invalid requests return structured error messages.
 
-### Validation Error Response Format:
+Example:
+
 ```json
 {
   "success": false,
@@ -183,47 +123,49 @@ All API requests are validated using **Zod** schemas. Invalid requests return st
     {
       "path": ["username"],
       "message": "Username must be at least 3 characters long"
-    },
-    {
-      "path": ["email"],
-      "message": "Invalid email address"
     }
   ]
 }
 ```
 
-### Common Validation Rules:
-- **Username:** Minimum 3 characters, alphanumeric with underscores
-- **Email:** Valid email format required
-- **Password:** Minimum 6 characters (consider increasing for production)
-
 ---
 
 ## 🚨 Error Handling
 
-All API errors follow a consistent response format:
+* All errors use **AppError** with proper HTTP status codes.
+* Global error middleware ensures consistent JSON responses.
+
+Example:
 
 ```json
 {
   "success": false,
-  "message": "Error message description",
+  "message": "Profile not found",
   "data": null
 }
 ```
 
-### Common HTTP Status Codes:
-- `200` - Success
-- `400` - Bad Request (validation errors)
-- `401` - Unauthorized (authentication required)
-- `403` - Forbidden (insufficient permissions)
-- `404` - Not Found
-- `500` - Internal Server Error
+Status codes include: `200`, `400`, `401`, `403`, `404`, `409`, `500`.
+
+---
+
+## 🛠 Implemented Improvements
+
+* **AppError** class for consistent error handling and HTTP status codes.
+* **Global error middleware** to capture and return errors with proper codes.
+* **Service Layer Refactor**: AuthService, ProfileService, WeeklyRoutineService
+
+  * Centralized logic, removed redundant controller checks.
+  * Validation and checks moved from middleware to services.
+* **Safe/select fields** returned in responses to avoid exposing sensitive data (e.g., password).
+* Controllers simplified to just call services and return `sendResponse`.
+* Standardized error messages and response format across the project.
 
 ---
 
 ## 🔗 Links
 
-- **Repository:** [GitHub](https://github.com/MuhmedWalied0/NutriMind_Project)
-- **Documentation:** Coming Soon
+* **Repository:** [GitHub](https://github.com/MuhmedWalied0/NutriMind_Project)
+* **Documentation:** Coming Soon
 
 ---
