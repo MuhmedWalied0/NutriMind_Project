@@ -1,42 +1,24 @@
-import WeeklyRoutine from "../models/weeklyRoutineModel.js";
 import asyncHandler from "express-async-handler";
 import { sendResponse } from "../utils/response.js";
-import { updateStatusRoutine } from "../utils/weeklyRoutineUtils.js";
+import weeklyRoutineService from "../services/weeklyRoutineService.js";
 
 export const getRoutines = asyncHandler(async (req, res) => {
-  const routines = await WeeklyRoutine.find({ user_id: req.user.id }).select(
-    "start_date progress status"
-  );
-
+  const routines = await weeklyRoutineService.getRoutines(req.user.id);
   return sendResponse(res, 200, true, "Routines fetched successfully", routines);
 });
 
 export const getCurrentRoutine = asyncHandler(async (req, res) => {
-  const existingRoutine = await WeeklyRoutine.findOne({
-    user_id: req.user.id,
-    status: "active",
-  }).select("progress start_date status _id");
+  const { routine, message, updated } = await weeklyRoutineService.getCurrentRoutine(req.user.id);
 
-  if (!existingRoutine) {
-    return sendResponse(res, 404, false, "No active routine found");
-  }
-
-  const isUpdated = await updateStatusRoutine(existingRoutine);
-  if (isUpdated) {
-    return sendResponse(res,200,true,"Your previous routine has ended. You can create a new one.",existingRoutine);
-  }
-
-  return sendResponse(res, 200, true, "Current routine", existingRoutine);
+  return sendResponse(res, updated ? 200 : 200, true, message, routine);
 });
 
 export const createRoutine = asyncHandler(async (req, res) => {
-  const routine = await WeeklyRoutine.create({
-    user_id: req.user.id,
-  });
+  const { routine, message, blocked } = await weeklyRoutineService.createRoutine(req.user.id);
 
-  const response = await WeeklyRoutine.findById(routine._id).select(
-    "start_date status _id"
-  );
+  if (blocked) {
+    return sendResponse(res, 200, true, message, routine);
+  }
 
-  return sendResponse(res, 201, true, "Routine created successfully", response);
+  return sendResponse(res, 201, true, message, routine);
 });
