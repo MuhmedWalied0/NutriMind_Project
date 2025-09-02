@@ -7,6 +7,7 @@ import '../widgets/authtxtOfTextField.dart';
 import '../widgets/donthave Account.dart';
 import '../widgets/maintxt.dart';
 import '../widgets/txtfield.dart';
+import 'forgetpasswordScreen.dart';
 
 class Signinscreen extends StatelessWidget {
   const Signinscreen({super.key});
@@ -36,9 +37,11 @@ class Signinscreen extends StatelessWidget {
               const Subheadtxt(txt: 'Good to see you again'),
               const SizedBox(height: 32,),
               const Authtxtoftextfield(txt: '  Email',),
+              SizedBox(height: 8,),
               const CustomTextField(labelText: 'Enter Email', icona: Icons.email,),
               const SizedBox(height: 16,),
               const Authtxtoftextfield(txt: '  password',),
+              SizedBox(height: 8,),
               const CustomTextField(labelText: 'Enter password', icona: Icons.password,),
               const SizedBox(height: 5,),
               Align(
@@ -55,7 +58,8 @@ class Signinscreen extends StatelessWidget {
               SizedBox(height: 48,),
               Mainbutton(func: (){}, txt: 'Sign In',),
               SizedBox(height: 8,),
-              DontHaveAccount(),
+              DontHaveAccount(buttontext: 'Don’t have account ? ', normaltext: 'Sign In',
+                func: () {Navigator.push(context, MaterialPageRoute(builder: (context)=>Forgetpasswordscreen()));},),
               SizedBox(height: 64,),
               Image.asset('assets/or.png'),
               SizedBox(height: 32,),

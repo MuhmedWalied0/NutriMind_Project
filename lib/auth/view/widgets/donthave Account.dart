@@ -2,21 +2,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DontHaveAccount extends StatelessWidget {
-  const DontHaveAccount({super.key});
+  final String normaltext;
+  final String buttontext;
+  final VoidCallback func;
+  const DontHaveAccount({super.key,
+  required this.buttontext,
+    required this.normaltext,
+    required this.func
+  });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Don’t have account ? ',
-          style: TextStyle(
+           Text(normaltext,
+          style:const  TextStyle(
             color:Colors.black,
           ),
           ),
-          TextButton(onPressed: (){},
-              child: const Text('Sign Up',
-              style: TextStyle(
+          TextButton(onPressed: func,
+              child:  Text(buttontext,
+              style:const TextStyle(
                 color: Color(0xff207344),
               ),
               ))

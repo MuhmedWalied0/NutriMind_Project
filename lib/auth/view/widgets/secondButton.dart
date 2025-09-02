@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/signUp.dart';
+
 class Secondbutton extends StatelessWidget {
   const Secondbutton({super.key});
 
@@ -18,7 +20,9 @@ class Secondbutton extends StatelessWidget {
                 color:Color(0xff207344)
               )
             ),
-            onPressed: (){},
+            onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Signup()));
+            },
             child: Text('Sign Up',
               style: TextStyle(
                 color:Color(0xff207344),
