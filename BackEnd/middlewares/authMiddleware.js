@@ -5,7 +5,7 @@ export const protect = (req, res, next) => {
   const token = req.cookies?.token;
 
   if (!token) {
-    return sendResponse(res, 401, false, "Not authorized, token missing");
+    return sendResponse(res, 401, "Not authorized, token missing");
   }
 
   try {
@@ -15,6 +15,6 @@ export const protect = (req, res, next) => {
 
     next();
   } catch (error) {
-    return sendResponse(res, 401, false, "Not authorized, token invalid");
+    return sendResponse(res, 401, "Not authorized, token invalid");
   }
 };
