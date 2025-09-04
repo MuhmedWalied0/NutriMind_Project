@@ -27,10 +27,17 @@ class CustomTextField extends StatelessWidget {
         labelText: labelText,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
+          borderSide:const  BorderSide(
+            color:Colors.green
+          )
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: const BorderSide(color: Colors.green, width: 2),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Color(0xff207344)),
         ),
       ),
     );

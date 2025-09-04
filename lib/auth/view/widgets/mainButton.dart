@@ -8,23 +8,20 @@ class Mainbutton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: 50,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xff207344)
-          ),
-            onPressed:func,
-            child: Text(txt,
-            style: TextStyle(
-              color:Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-            )
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: 50,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor:const Color(0xff207344)
         ),
+          onPressed:func,
+          child: Text(txt,
+          style:const TextStyle(
+            color:Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+          )
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tester/auth/view/widgets/mainButton.dart';
 import 'package:tester/auth/view/widgets/subheadtxt.dart';
 
+import '../../../surveyFeature/startSurvey/StartSurveyScreen.dart';
 import '../widgets/authtxtOfTextField.dart';
 import '../widgets/donthave Account.dart';
 import '../widgets/maintxt.dart';
@@ -37,11 +38,11 @@ class Signinscreen extends StatelessWidget {
               const Subheadtxt(txt: 'Good to see you again'),
               const SizedBox(height: 32,),
               const Authtxtoftextfield(txt: '  Email',),
-              SizedBox(height: 8,),
+              const SizedBox(height: 8,),
               const CustomTextField(labelText: 'Enter Email', icona: Icons.email,),
               const SizedBox(height: 16,),
               const Authtxtoftextfield(txt: '  password',),
-              SizedBox(height: 8,),
+             const  SizedBox(height: 8,),
               const CustomTextField(labelText: 'Enter password', icona: Icons.password,),
               const SizedBox(height: 5,),
               Align(
@@ -56,13 +57,15 @@ class Signinscreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 48,),
-              Mainbutton(func: (){}, txt: 'Sign In',),
+              Mainbutton(func: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const Startsurveyscreen()));
+              }, txt: 'Sign In',),
               SizedBox(height: 8,),
               DontHaveAccount(buttontext: 'Don’t have account ? ', normaltext: 'Sign In',
-                func: () {Navigator.push(context, MaterialPageRoute(builder: (context)=>Forgetpasswordscreen()));},),
-              SizedBox(height: 64,),
+                func: () {Navigator.push(context, MaterialPageRoute(builder: (context)=>const Forgetpasswordscreen()));},),
+             const SizedBox(height: 64,),
               Image.asset('assets/or.png'),
-              SizedBox(height: 32,),
+              const SizedBox(height: 32,),
               Image.asset('assets/google.png'),
             ],
           ),
