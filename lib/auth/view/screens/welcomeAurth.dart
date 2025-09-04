@@ -22,7 +22,7 @@ class Welcomeaurth extends StatelessWidget {
           }, txt: 'Sign In',
           ),
           SizedBox(height: 16,),
-          Secondbutton(),
+          Secondbutton(txt: 'Sign Up',),
         ],
       ),
     );

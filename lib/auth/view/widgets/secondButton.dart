@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import '../screens/signUp.dart';
 
 class Secondbutton extends StatelessWidget {
-  const Secondbutton({super.key});
+  final String txt;
+  const Secondbutton({super.key,required this.txt});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class Secondbutton extends StatelessWidget {
             onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>Signup()));
             },
-            child: Text('Sign Up',
+            child: Text(txt,
               style: TextStyle(
                 color:Color(0xff207344),
                 fontWeight: FontWeight.bold,

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tester/auth/view/screens/verficationcode.dart';
 import 'package:tester/auth/view/widgets/mainButton.dart';
 import 'package:tester/auth/view/widgets/maintxt.dart';
 import 'package:tester/auth/view/widgets/subheadtxt.dart';
@@ -25,7 +26,9 @@ class Forgetpasswordscreen extends StatelessWidget {
               const SizedBox(height: 34,),
               const CustomTextField(labelText: 'Enter your Email', icona: Icons.email,),
               const SizedBox(height: 50,),
-              Mainbutton(func: (){}, txt: 'Send Code'),
+              Mainbutton(func: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Verficationcode()));
+              }, txt: 'Send Code'),
             ],
           ),
         ),
