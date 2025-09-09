@@ -506,6 +506,22 @@ all_in_one.to_csv('/kaggle/working/all_in_one.csv', index=False)
 all_in_one['RB_Target'] = ''
 all_in_one = all_in_one.sample(all_in_one.shape[0]) #Shuffeling 
 gemeni_gate(all_in_one, 0, "RB_Target") 
-# all_in_one.to_csv('/kaggle/working/all_in_one.csv', index=False)
+
+## Let's sperate each coloumn's type from each other and concat them
+HI_df = all_in_one[['user_inputs', 'HI_Target']]
+HI_df['flag'] = 'H'
+RB_df = all_in_one[['user_inputs', 'RB_Target']]
+RB_df['flag'] = 'R'
+task_H = 'This is my info with user health issues, give me a structured analysis about user issues in the following json structure'
+task_R = "This is user info with his health issues, give me a structured routine according to user's issues and info in the following json structure  "
+HI_df.rename(columns={'HI_Target':'response'}, inplace=True)
+RB_df.rename(columns={'RB_Target':'response'}, inplace=True)
+concated.loc[concated['flag'] == 'H', 'output_scheme'] = json.dumps(HI_StructuredOutput.model_json_schema(), ensure_ascii = False)
+concated.loc[concated['flag'] == 'H', 'task'] = task_H
+concated.loc[concated['flag'] == 'R', 'output_scheme'] = json.dumps(RB_StructuredOutput.model_json_schema(), ensure_ascii = False)
+concated.loc[concated['flag'] == 'R', 'task'] = task_R
+concated = pd.concat([HI_df, RB_df])
+concated = concated.reset_index(drop=True)
+# concated.to_csv('/kaggle/working/all_in_one.csv', index=False)
 
 ################# - Done! --------->
